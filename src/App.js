@@ -3,10 +3,10 @@ import { Nav, Navbar, Container, Row, Col } from 'react-bootstrap';
 import bg from './img/bg.png';
 import { useState } from 'react';
 import data from './data.js';
+import { Route, Routes, Link } from 'react-router-dom';
+import DetailPage from './Detail';
 
 function App() {
-  let [shoes] = useState(data);
-
   return (
     <div className="App">
       <Navbar bg="light" variant="light">
@@ -18,6 +18,23 @@ function App() {
           </Nav>
         </Container>
       </Navbar>
+
+      <Link to={'/'}>홈</Link>
+      <Link to={'/detail'}>상세 페이지</Link>
+
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/detail" element={<DetailPage />} />
+      </Routes>
+    </div>
+  );
+}
+
+function MainPage(props) {
+  let [shoes] = useState(data);
+
+  return (
+    <>
       <div className="main-bg" style={{ backgroundImage: `url(${bg})` }}></div>
 
       <Container>
@@ -33,7 +50,7 @@ function App() {
           })}
         </Row>
       </Container>
-    </div>
+    </>
   );
 }
 
