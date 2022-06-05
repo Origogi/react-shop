@@ -1,13 +1,25 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-function DetailPage(props) {
+function Detail(props) {
   let { id } = useParams();
 
   let [item] = useState(props.shoes.find((item) => item.id === Number(id)));
 
+  let [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    if (visible) {
+      setTimeout(() => {
+        setVisible(false);
+      }, 2000);
+    }
+  });
+
   return (
     <div className="container">
+      {visible ? <h4>사라짐</h4> : <></>}
+
       <div className="row">
         <div className="col-md-6">
           <img
@@ -28,4 +40,4 @@ function DetailPage(props) {
   );
 }
 
-export default DetailPage;
+export default Detail;
