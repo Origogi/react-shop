@@ -7,18 +7,29 @@ function Detail(props) {
   let [item] = useState(props.shoes.find((item) => item.id === Number(id)));
 
   let [visible, setVisible] = useState(true);
+  let [count, setCount] = useState(0);
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setCount(count + 1);
+  //     setVisible(false);
+  //   }, 2000);
+  //   return () => {
+  //     console.log("heello");
+  //   };
+  // }, []);
 
   useEffect(() => {
-    if (visible) {
-      setTimeout(() => {
-        setVisible(false);
-      }, 2000);
-    }
-  });
+    console.log("컴포넌트가 화면에 나타남");
+    return () => {
+      console.log("컴포넌트가 화면에서 사라짐");
+    };
+  }, []);
 
   return (
     <div className="container">
       {visible ? <h4>사라짐</h4> : <></>}
+      {count}
 
       <div className="row">
         <div className="col-md-6">
