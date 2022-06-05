@@ -4,9 +4,7 @@ import { useState } from "react";
 function DetailPage(props) {
   let { id } = useParams();
 
-  let [item] = useState(props.shoes[id]);
-
-  console.log(id);
+  let [item] = useState(props.shoes.find((item) => item.id === Number(id)));
 
   return (
     <div className="container">

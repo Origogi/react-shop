@@ -43,7 +43,7 @@ function App() {
 }
 
 function Main(props) {
-  let [shoes] = useState(data);
+  let [shoes, setShoes] = useState(data);
 
   return (
     <>
@@ -54,12 +54,40 @@ function Main(props) {
           {shoes.map((item, i) => {
             return (
               <Card
+                key={item.id}
                 title={item.title}
                 price={item.price}
                 imgSrc={`https://codingapple1.github.io/shop/shoes${i + 1}.jpg`}
               />
             );
           })}
+        </Row>
+        <Row>
+          <button
+            type="button"
+            className="btn btn-outline-primary"
+            onClick={() => {
+              let result = [...shoes].sort((a, b) => {
+                console.log(`${a.title} ${b.title} ${a.title < b.title}`);
+                let strA = a.title.toLowerCase();
+                let strB = b.title.toLowerCase();
+
+                if (strA < strB) {
+                  return -1;
+                } else if (strA > strB) {
+                  return 1;
+                } else {
+                  return 0;
+                }
+
+                return 0;
+              });
+              console.log(result);
+              setShoes(result);
+            }}
+          >
+            Sort
+          </button>
         </Row>
       </Container>
     </>
