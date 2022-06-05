@@ -1,29 +1,31 @@
-import './App.css';
-import { Nav, Navbar, Container, Row, Col } from 'react-bootstrap';
-import bg from './img/bg.png';
-import { useState } from 'react';
-import data from './data.js';
-import { Route, Routes, Link, useNavigate, Outlet } from 'react-router-dom';
-import Detail from './pages/Detail';
+import "./App.css";
+import { Nav, Navbar, Container, Row, Col } from "react-bootstrap";
+import bg from "./img/bg.png";
+import { useState } from "react";
+import data from "./data.js";
+import { Route, Routes, Link, useNavigate, Outlet } from "react-router-dom";
+import Detail from "./pages/Detail";
 
 function App() {
   let navigate = useNavigate();
+
+  let [shoes] = useState(data);
 
   return (
     <div className="App">
       <Navbar bg="light" variant="light">
         <Container>
-          <Navbar.Brand onClick={() => navigate('/')}>ShoeShop</Navbar.Brand>
+          <Navbar.Brand onClick={() => navigate("/")}>ShoeShop</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link onClick={() => navigate('/')}>Home</Nav.Link>
-            <Nav.Link onClick={() => navigate('/detail')}>Cart</Nav.Link>
+            <Nav.Link onClick={() => navigate("/")}>Home</Nav.Link>
+            <Nav.Link onClick={() => navigate("/detail")}>Cart</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
 
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
         <Route path="/about" element={<About />}>
           <Route path="member" element={<div>회사 멤버</div>} />
           <Route path="location" element={<div>위치 정보</div>} />
@@ -85,7 +87,7 @@ function Event() {
 function Card(props) {
   return (
     <Col>
-      {' '}
+      {" "}
       <img src={props.imgSrc} width="80%"></img>
       <h4>{props.title}</h4>
       <p>{props.price}</p>
