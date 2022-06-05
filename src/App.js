@@ -68,7 +68,6 @@ function Main(props) {
             className="btn btn-outline-primary"
             onClick={() => {
               let result = [...shoes].sort((a, b) => {
-                console.log(`${a.title} ${b.title} ${a.title < b.title}`);
                 let strA = a.title.toLowerCase();
                 let strB = b.title.toLowerCase();
 
@@ -79,10 +78,7 @@ function Main(props) {
                 } else {
                   return 0;
                 }
-
-                return 0;
               });
-              console.log(result);
               setShoes(result);
             }}
           >
