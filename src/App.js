@@ -62,29 +62,27 @@ function Main(props) {
             );
           })}
         </Row>
-        <Row>
-          <button
-            type="button"
-            className="btn btn-outline-primary"
-            onClick={() => {
-              let result = [...shoes].sort((a, b) => {
-                let strA = a.title.toLowerCase();
-                let strB = b.title.toLowerCase();
+        <button
+          type="button"
+          className="btn btn-outline-primary"
+          onClick={() => {
+            let result = [...shoes].sort((a, b) => {
+              let strA = a.title.toLowerCase();
+              let strB = b.title.toLowerCase();
 
-                if (strA < strB) {
-                  return -1;
-                } else if (strA > strB) {
-                  return 1;
-                } else {
-                  return 0;
-                }
-              });
-              setShoes(result);
-            }}
-          >
-            Sort
-          </button>
-        </Row>
+              if (strA < strB) {
+                return -1;
+              } else if (strA > strB) {
+                return 1;
+              } else {
+                return 0;
+              }
+            });
+            setShoes(result);
+          }}
+        >
+          Sort
+        </button>
       </Container>
     </>
   );
