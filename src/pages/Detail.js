@@ -1,23 +1,12 @@
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { Nav, Navbar, Container, Row, Col } from "react-bootstrap";
 
 function Detail(props) {
   let { id } = useParams();
 
   let [item] = useState(props.shoes.find((item) => item.id === Number(id)));
-
-  let [visible, setVisible] = useState(true);
-  let [count, setCount] = useState(0);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setCount(count + 1);
-  //     setVisible(false);
-  //   }, 2000);
-  //   return () => {
-  //     console.log("heello");
-  //   };
-  // }, []);
+  let [tabIndex, setTabIndex] = useState(0);
 
   useEffect(() => {
     console.log("컴포넌트가 화면에 나타남");
@@ -31,6 +20,8 @@ function Detail(props) {
   useEffect(() => {
     console.log(value);
   }, [value]);
+
+  console.log(tabIndex);
 
   return (
     <div className="container">
@@ -57,8 +48,53 @@ function Detail(props) {
           setValue(e.target.value);
         }}
       />
+      <Nav variant="tabs" defaultActiveKey="link0">
+        <Nav.Item>
+          <Nav.Link
+            eventKey="link0"
+            onClick={() => {
+              setTabIndex(0);
+            }}
+          >
+            버튼0
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link
+            eventKey="link1"
+            onClick={() => {
+              setTabIndex(1);
+            }}
+          >
+            버튼1
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link
+            eventKey="link2"
+            onClick={() => {
+              setTabIndex(2);
+            }}
+          >
+            버튼2
+          </Nav.Link>
+        </Nav.Item>
+      </Nav>
+
+      <TabContent index={tabIndex} />
     </div>
   );
+}
+
+function TabContent(props) {
+  if (props.index == 0) {
+    return <div>내용0</div>;
+  } else if (props.index == 1) {
+    return <div>내용1</div>;
+  } else if (props.index == 2) {
+    return <div>내용2</div>;
+  }
+  return null;
 }
 
 export default Detail;
