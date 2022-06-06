@@ -5,6 +5,7 @@ import { useState } from "react";
 import data from "./data.js";
 import { Route, Routes, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from "./pages/Detail";
+import axios from "axios";
 
 function App() {
   let navigate = useNavigate();
@@ -44,13 +45,15 @@ function App() {
 
 function Main(props) {
   let [shoes, setShoes] = useState(data);
+  let [moreIndex, setMoreIndex] = useState(2);
+  let [loadingState, setLoadingState] = useState(false);
 
   return (
     <>
       <div className="main-bg" style={{ backgroundImage: `url(${bg})` }}></div>
 
-      <Container>
-        <Row>
+      <div className="container">
+        <div className="row">
           {shoes.map((item, i) => {
             return (
               <Card
@@ -61,29 +64,63 @@ function Main(props) {
               />
             );
           })}
-        </Row>
-        <button
-          type="button"
-          className="btn btn-outline-primary"
-          onClick={() => {
-            let result = [...shoes].sort((a, b) => {
-              let strA = a.title.toLowerCase();
-              let strB = b.title.toLowerCase();
+        </div>
+        {loadingState ? (
+          <div className="row">
+            <h4>로딩중입니다.</h4>
+          </div>
+        ) : null}
 
-              if (strA < strB) {
-                return -1;
-              } else if (strA > strB) {
-                return 1;
-              } else {
-                return 0;
-              }
-            });
-            setShoes(result);
-          }}
-        >
-          Sort
-        </button>
-      </Container>
+        <div className="row">
+          <button
+            type="button"
+            className="btn btn-outline-primary"
+            onClick={() => {
+              let result = [...shoes].sort((a, b) => {
+                let strA = a.title.toLowerCase();
+                let strB = b.title.toLowerCase();
+
+                if (strA < strB) {
+                  return -1;
+                } else if (strA > strB) {
+                  return 1;
+                } else {
+                  return 0;
+                }
+              });
+              setShoes(result);
+            }}
+          >
+            Sort
+          </button>
+        </div>
+        <div className="row">
+          <button
+            onClick={() => {
+              setLoadingState(true);
+              axios
+                .get(
+                  `https://codingapple1.github.io/shop/data${moreIndex}.json`
+                )
+                .then((data) => {
+                  console.log(data.data);
+
+                  let result = [...shoes, ...data.data];
+                  setShoes(result);
+                  setMoreIndex(moreIndex + 1);
+                  setLoadingState(false);
+                })
+                .catch(() => {
+                  alert("실패함");
+                  setLoadingState(false);
+                });
+            }}
+            className="btn btn-outline-primary"
+          >
+            Get More Items!
+          </button>
+        </div>
+      </div>
     </>
   );
 }
@@ -108,12 +145,12 @@ function Event() {
 
 function Card(props) {
   return (
-    <Col>
+    <div className="col-4">
       {" "}
       <img src={props.imgSrc} width="80%"></img>
       <h4>{props.title}</h4>
       <p>{props.price}</p>
-    </Col>
+    </div>
   );
 }
 

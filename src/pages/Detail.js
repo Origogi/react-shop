@@ -26,11 +26,14 @@ function Detail(props) {
     };
   }, []);
 
+  const [value, setValue] = useState("");
+
+  useEffect(() => {
+    console.log(value);
+  }, [value]);
+
   return (
     <div className="container">
-      {visible ? <h4>사라짐</h4> : <></>}
-      {count}
-
       <div className="row">
         <div className="col-md-6">
           <img
@@ -47,6 +50,13 @@ function Detail(props) {
           <button className="btn btn-danger">주문하기</button>
         </div>
       </div>
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => {
+          setValue(e.target.value);
+        }}
+      />
     </div>
   );
 }
