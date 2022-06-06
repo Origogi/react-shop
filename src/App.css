@@ -7,3 +7,13 @@
   background-size: cover;
   background-position: center;
 }
+
+.fade_start {
+  opacity: 0;
+}
+
+.fade_end {
+  opacity: 1;
+
+  transition: all 0.5s;
+}
