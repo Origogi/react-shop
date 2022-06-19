@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import { Nav, Navbar, Container, Row, Col } from "react-bootstrap";
+import React, { useContext, useEffect, useState } from "react";
+import { Nav } from "react-bootstrap";
+import { Context1 } from "../App.js";
 
 function Detail(props) {
   let { id } = useParams();
-
   let [item] = useState(props.shoes.find((item) => item.id === Number(id)));
   let [tabIndex, setTabIndex] = useState(0);
   let [fade, setFade] = useState("");
@@ -18,7 +18,8 @@ function Detail(props) {
 
   useEffect(() => {
     setFade("fade_end");
-  });
+    return null;
+  }, []);
 
   return (
     <div className={`fade_start ${fade}`}>
@@ -26,6 +27,7 @@ function Detail(props) {
         <div className="row">
           <div className="col-md-6">
             <img
+              alt=""
               src={`https://codingapple1.github.io/shop/shoes${
                 Number(id) + 1
               }.jpg`}
@@ -82,6 +84,8 @@ function Detail(props) {
 function TabContent({ index }) {
   let [fade, setFade] = useState("");
 
+  let { stock, shoes } = useContext(Context1);
+
   useEffect(() => {
     setFade("");
     setTimeout(() => {
@@ -91,7 +95,11 @@ function TabContent({ index }) {
 
   return (
     <div className={`fade_start ${fade}`}>
-      {[<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][index]}
+      {
+        [<div>{stock[0]}</div>, <div>{shoes[0].title}</div>, <div>내용2</div>][
+          index
+        ]
+      }
     </div>
   );
 }

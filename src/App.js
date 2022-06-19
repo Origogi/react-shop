@@ -1,16 +1,19 @@
 import "./App.css";
-import { Nav, Navbar, Container, Row, Col } from "react-bootstrap";
+import { Nav, Navbar, Container } from "react-bootstrap";
 import bg from "./img/bg.png";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import data from "./data.js";
-import { Route, Routes, Link, useNavigate, Outlet } from "react-router-dom";
+import { Route, Routes, useNavigate, Outlet } from "react-router-dom";
 import Detail from "./pages/Detail";
 import axios from "axios";
+
+export let Context1 = createContext();
 
 function App() {
   let navigate = useNavigate();
 
   let [shoes] = useState(data);
+  let [stock] = useState([10, 11, 12]);
 
   return (
     <div className="App">
@@ -26,7 +29,14 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
+        <Route
+          path="/detail/:id"
+          element={
+            <Context1.Provider value={{ stock, shoes }}>
+              <Detail shoes={shoes} />
+            </Context1.Provider>
+          }
+        />
         <Route path="/about" element={<About />}>
           <Route path="member" element={<div>회사 멤버</div>} />
           <Route path="location" element={<div>위치 정보</div>} />
@@ -147,7 +157,7 @@ function Card(props) {
   return (
     <div className="col-4">
       {" "}
-      <img src={props.imgSrc} width="80%"></img>
+      <img src={props.imgSrc} width="80%" alt=""></img>
       <h4>{props.title}</h4>
       <p>{props.price}</p>
     </div>
