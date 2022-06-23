@@ -2,7 +2,7 @@ import "./App.css";
 import { Nav, Navbar, Container } from "react-bootstrap";
 import bg from "./img/bg.png";
 import { createContext, useState } from "react";
-import data from "./data.js";
+import { data } from "./data.js";
 import { Route, Routes, useNavigate, Outlet } from "react-router-dom";
 import Detail from "./pages/Detail";
 import axios from "axios";
