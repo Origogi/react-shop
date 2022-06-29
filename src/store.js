@@ -1,19 +1,6 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 import { cartData } from "./data.js";
-
-let user = createSlice({
-  name: "user",
-  initialState: "kim",
-  reducers: {
-    changeName(state) {
-      return "john kim";
-    },
-  },
-});
-
-// change state 함수들
-// 오른 쪽 자료를 변수로 빼는 문법
-export let { changeName } = user.actions;
+import user from "./store/userSlice.js";
 
 let stock = createSlice({
   name: "stock",
@@ -23,7 +10,28 @@ let stock = createSlice({
 let cart = createSlice({
   name: "cart",
   initialState: cartData,
+  reducers: {
+    incCount(state, action) {
+      console.log(state);
+
+      const targetId = action.payload;
+      const targetState = state.find((element) => element.id == targetId);
+      targetState.count += 1;
+    },
+    addToCart(state, action) {
+      const newItem = action.payload;
+      const targetItem = state.find((e) => e.id === newItem.id);
+
+      if (undefined === targetItem) {
+        state.push(action.payload);
+      } else {
+        targetItem.count += 1;
+      }
+    },
+  },
 });
+
+export let { incCount, addToCart } = cart.actions;
 
 export default configureStore({
   reducer: {

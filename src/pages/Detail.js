@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import React, { useContext, useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
 import { Context1 } from "../App.js";
+import { addToCart } from "./../store.js";
+import { useDispatch } from "react-redux";
 
 function Detail(props) {
   let { id } = useParams();
@@ -10,16 +12,10 @@ function Detail(props) {
   let [fade, setFade] = useState("");
 
   useEffect(() => {
-    console.log("컴포넌트가 화면에 나타남");
-    return () => {
-      console.log("컴포넌트가 화면에서 사라짐");
-    };
+    setFade("fade_end");
   }, []);
 
-  useEffect(() => {
-    setFade("fade_end");
-    return null;
-  }, []);
+  let dispatch = useDispatch();
 
   return (
     <div className={`fade_start ${fade}`}>
@@ -38,7 +34,16 @@ function Detail(props) {
             <h4 className="pt-5">{item.title}</h4>
             <p>{item.content}</p>
             <p>{item.price}원</p>
-            <button className="btn btn-danger">주문하기</button>
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                dispatch(
+                  addToCart({ id: item.id, name: item.title, count: 1 })
+                );
+              }}
+            >
+              주문하기
+            </button>
           </div>
         </div>
 
