@@ -1,9 +1,16 @@
 import React from "react";
 import { Table } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { changeName } from "./../store.js";
 
 function Cart() {
   let cartData = useSelector((state) => state.cart);
+  let userData = useSelector((state) => state.user);
+
+  let dispatch = useDispatch();
+
+  console.log(userData);
+
   console.log(cartData);
   return (
     <div>
@@ -22,7 +29,15 @@ function Cart() {
               <td>{element.id}</td>
               <td>{element.name}</td>
               <td>{element.count}</td>
-              <td>안녕</td>
+              <td>
+                <button
+                  onClick={() => {
+                    dispatch(changeName());
+                  }}
+                >
+                  +
+                </button>
+              </td>
             </tr>
           </tbody>
         ))}
