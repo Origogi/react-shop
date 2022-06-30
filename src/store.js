@@ -15,7 +15,7 @@ let cart = createSlice({
       console.log(state);
 
       const targetId = action.payload;
-      const targetState = state.find((element) => element.id == targetId);
+      const targetState = state.find((element) => element.id === targetId);
       targetState.count += 1;
     },
     addToCart(state, action) {

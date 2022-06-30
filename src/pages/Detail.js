@@ -15,6 +15,22 @@ function Detail(props) {
     setFade("fade_end");
   }, []);
 
+  useEffect(() => {
+    const watched = JSON.parse(localStorage.getItem("watched"));
+
+    for (var i = 0; i < watched.length; i++) {
+      if (watched[i] === Number(id)) {
+        watched.splice(i, 1);
+        break;
+      }
+    }
+
+    const result = [Number(id), ...watched];
+    console.log(result);
+
+    localStorage.setItem("watched", JSON.stringify(result));
+  }, []);
+
   let dispatch = useDispatch();
 
   return (

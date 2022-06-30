@@ -1,7 +1,7 @@
 import "./App.css";
 import { Nav, Navbar, Container } from "react-bootstrap";
 import bg from "./img/bg.png";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { data } from "./data.js";
 import { Route, Routes, useNavigate, Outlet } from "react-router-dom";
 import Detail from "./pages/Detail";
@@ -10,7 +10,28 @@ import Cart from "./pages/Cart";
 
 export let Context1 = createContext();
 
+// localStorage => 반 영구적 데이터 저장
+// 아이템 저장 localStorage.setItem( key, value)
+// 아이템 읽을 때 localStorage.getItem(key)
+// 아이템 삭제 localStorage.removeItem(key)
+
+// sessionStorage => 휘발성 데이터 저장, 브라우저가 종료되만 삭제
+
 function App() {
+  // const obj = { name: "kim" };
+  // localStorage.setItem("data", JSON.stringify(obj));
+
+  // const objStr = localStorage.getItem("data");
+  // console.log(JSON.parse(objStr));
+
+  useEffect(() => {
+    if (localStorage.getItem("watched") === null) {
+      console.log("hello1");
+
+      localStorage.setItem("watched", JSON.stringify([]));
+    }
+  }, []);
+
   let navigate = useNavigate();
 
   let [shoes] = useState(data);
