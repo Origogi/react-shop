@@ -12,6 +12,7 @@ import { useQuery } from 'react-query';
 
 const Detail = lazy(() => import('./pages/Detail'));
 const Cart = lazy(() => import('./pages/Cart'));
+const Sample = lazy(() => import('./pages/Sample'));
 
 export let Context1 = createContext();
 
@@ -59,6 +60,7 @@ function App() {
           <Nav className="me-auto">
             <Nav.Link onClick={() => navigate('/')}>Home</Nav.Link>
             <Nav.Link onClick={() => navigate('/cart')}>Cart</Nav.Link>
+            <Nav.Link onClick={() => navigate('/sample')}>Sample</Nav.Link>
           </Nav>
           <Nav className="ms-auto">
             {result.isLoading && '로딩중'}
@@ -96,6 +98,8 @@ function App() {
             </Suspense>
           }
         />
+
+        <Route path="/sample" element={<Sample />} />
 
         <Route path="*" element={<div>잘못된 페이지</div>} />
       </Routes>
