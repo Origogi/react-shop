@@ -1,22 +1,28 @@
-import { useParams } from "react-router-dom";
-import React, { useContext, useEffect, useState } from "react";
-import { Nav } from "react-bootstrap";
-import { Context1 } from "../App.js";
-import { addToCart } from "./../store.js";
-import { useDispatch } from "react-redux";
+import { useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Nav } from 'react-bootstrap';
+import { Context1 } from '../App.js';
+import { addToCart } from './../store.js';
+import { useDispatch } from 'react-redux';
+
+var a = 0;
 
 function Detail(props) {
+  for (var i = 0; i < 1e9; i++) {
+    a = i;
+  }
+
   let { id } = useParams();
   let [item] = useState(props.shoes.find((item) => item.id === Number(id)));
   let [tabIndex, setTabIndex] = useState(0);
-  let [fade, setFade] = useState("");
+  let [fade, setFade] = useState('');
 
   useEffect(() => {
-    setFade("fade_end");
+    setFade('fade_end');
   }, []);
 
   useEffect(() => {
-    const watched = JSON.parse(localStorage.getItem("watched"));
+    const watched = JSON.parse(localStorage.getItem('watched'));
 
     for (var i = 0; i < watched.length; i++) {
       if (watched[i] === Number(id)) {
@@ -28,7 +34,7 @@ function Detail(props) {
     const result = [Number(id), ...watched];
     console.log(result);
 
-    localStorage.setItem("watched", JSON.stringify(result));
+    localStorage.setItem('watched', JSON.stringify(result));
   }, []);
 
   let dispatch = useDispatch();
@@ -103,14 +109,14 @@ function Detail(props) {
 }
 
 function TabContent({ index }) {
-  let [fade, setFade] = useState("");
+  let [fade, setFade] = useState('');
 
   let { stock, shoes } = useContext(Context1);
 
   useEffect(() => {
-    setFade("");
+    setFade('');
     setTimeout(() => {
-      setFade("fade_end");
+      setFade('fade_end');
     }, 100);
   }, [index]);
 

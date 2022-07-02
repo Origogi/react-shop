@@ -1,10 +1,17 @@
-import React from "react";
-import { Table } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { changeName, increaseAge } from "./../store/userSlice.js";
-import { incCount } from './../store.js'
+import React from 'react';
+import { Table } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeName, increaseAge } from './../store/userSlice.js';
+import { incCount } from './../store.js';
 
+var a = 0;
 function Cart() {
+  // 렌더링이 느려지는 코드
+  // 크롬 > 디버그 툴  >  `Profiler` 에서 확인 가능
+  for (var i = 0; i < 1e9; i++) {
+    a = i;
+  }
+
   let cartData = useSelector((state) => state.cart);
   let userData = useSelector((state) => state.user);
 
