@@ -5,13 +5,7 @@ import { Context1 } from '../App.js';
 import { addToCart } from './../store.js';
 import { useDispatch } from 'react-redux';
 
-var a = 0;
-
 function Detail(props) {
-  for (var i = 0; i < 1e9; i++) {
-    a = i;
-  }
-
   let { id } = useParams();
   let [item] = useState(props.shoes.find((item) => item.id === Number(id)));
   let [tabIndex, setTabIndex] = useState(0);

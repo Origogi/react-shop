@@ -1,13 +1,17 @@
-import "./App.css";
-import { Nav, Navbar, Container } from "react-bootstrap";
-import bg from "./img/bg.png";
-import { createContext, useEffect, useState } from "react";
-import { data } from "./data.js";
-import { Route, Routes, useNavigate, Outlet } from "react-router-dom";
-import Detail from "./pages/Detail";
-import axios from "axios";
-import Cart from "./pages/Cart";
-import { useQuery } from "react-query";
+import './App.css';
+import { Nav, Navbar, Container } from 'react-bootstrap';
+import bg from './img/bg.png';
+import { createContext, lazy, useEffect, useState, Suspense } from 'react';
+import { data } from './data.js';
+import { Route, Routes, useNavigate, Outlet } from 'react-router-dom';
+import axios from 'axios';
+import { useQuery } from 'react-query';
+
+// Lazy Loading
+// 싸이트를 발행할 때 별도의 페이지로 분리됨
+
+const Detail = lazy(() => import('./pages/Detail'));
+const Cart = lazy(() => import('./pages/Cart'));
 
 export let Context1 = createContext();
 
@@ -26,10 +30,10 @@ function App() {
   // console.log(JSON.parse(objStr));
 
   useEffect(() => {
-    if (localStorage.getItem("watched") === null) {
-      console.log("hello1");
+    if (localStorage.getItem('watched') === null) {
+      console.log('hello1');
 
-      localStorage.setItem("watched", JSON.stringify([]));
+      localStorage.setItem('watched', JSON.stringify([]));
     }
   }, []);
 
@@ -38,9 +42,9 @@ function App() {
   let [shoes] = useState(data);
   let [stock] = useState([10, 11, 12]);
 
-  let result = useQuery("getUser", () => {
+  let result = useQuery('getUser', () => {
     return axios
-      .get("https://codingapple1.github.io/userdata.json")
+      .get('https://codingapple1.github.io/userdata.json')
       .then((a) => {
         console.log(a.data);
         return a.data;
@@ -51,14 +55,14 @@ function App() {
     <div className="App">
       <Navbar bg="light" variant="light">
         <Container>
-          <Navbar.Brand onClick={() => navigate("/")}>ShoeShop</Navbar.Brand>
+          <Navbar.Brand onClick={() => navigate('/')}>ShoeShop</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link onClick={() => navigate("/")}>Home</Nav.Link>
-            <Nav.Link onClick={() => navigate("/cart")}>Cart</Nav.Link>
+            <Nav.Link onClick={() => navigate('/')}>Home</Nav.Link>
+            <Nav.Link onClick={() => navigate('/cart')}>Cart</Nav.Link>
           </Nav>
           <Nav className="ms-auto">
-            {result.isLoading && "로딩중"}
-            {result.error && "에러"}
+            {result.isLoading && '로딩중'}
+            {result.error && '에러'}
             {result.data && result.data.name}
           </Nav>
         </Container>
@@ -84,7 +88,14 @@ function App() {
           <Route path="two" element={<div>생일 기념 쿠폰 받기</div>} />
         </Route>
 
-        <Route path="/cart" element={<Cart />} />
+        <Route
+          path="/cart"
+          element={
+            <Suspense fallback={<div>로딩중..</div>}>
+              <Cart />
+            </Suspense>
+          }
+        />
 
         <Route path="*" element={<div>잘못된 페이지</div>} />
       </Routes>
@@ -160,7 +171,7 @@ function Main(props) {
                   setLoadingState(false);
                 })
                 .catch(() => {
-                  alert("실패함");
+                  alert('실패함');
                   setLoadingState(false);
                 });
             }}
@@ -195,7 +206,7 @@ function Event() {
 function Card(props) {
   return (
     <div className="col-4">
-      {" "}
+      {' '}
       <img src={props.imgSrc} width="80%" alt=""></img>
       <h4>{props.title}</h4>
       <p>{props.price}</p>
